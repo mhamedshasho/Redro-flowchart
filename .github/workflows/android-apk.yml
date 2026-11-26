@@ -37,9 +37,8 @@ jobs:
           node --input-type=module -e '
             import sharp from "sharp";
             import { existsSync } from "node:fs";
-            const source = "assets/logos/redro-flowchart.svg";
-            if (!existsSync(source)) throw new Error("Required app icon is missing: " + source);
-            await sharp(source).resize(1024,1024,{fit:"contain",background:{r:17,g:19,b:24,alpha:1}}).png().toFile("resources/icon.png");
+            const source = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#111318"/><g fill="none" stroke="#ef303b" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><rect x="76" y="82" width="128" height="88" rx="18"/><rect x="308" y="82" width="128" height="88" rx="18"/><rect x="192" y="342" width="128" height="88" rx="18"/><path d="M204 126h104M256 170v86m0 0-80 0v86m80-86h80v86"/></g><g fill="#f5f6fa"><circle cx="140" cy="126" r="13"/><circle cx="372" cy="126" r="13"/><circle cx="256" cy="386" r="13"/></g></svg>`;
+            await sharp(Buffer.from(source)).resize(1024,1024).png().toFile("resources/icon.png");
           '
       - name: Initialize Capacitor Android
         run: |
